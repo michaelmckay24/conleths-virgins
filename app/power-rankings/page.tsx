@@ -11,24 +11,24 @@ function MovementIndicator({
 }) {
   if (previousRank === null) {
     return (
-      <span className="font-mono text-xs font-semibold text-accent">NEW</span>
+      <span className="shrink-0 font-mono text-xs font-semibold text-accent">NEW</span>
     );
   }
   if (rank < previousRank) {
     return (
-      <span className="font-mono text-xs font-semibold text-win">
+      <span className="shrink-0 font-mono text-xs font-semibold text-win">
         ↑ {previousRank - rank}
       </span>
     );
   }
   if (rank > previousRank) {
     return (
-      <span className="font-mono text-xs font-semibold text-loss">
+      <span className="shrink-0 font-mono text-xs font-semibold text-loss">
         ↓ {rank - previousRank}
       </span>
     );
   }
-  return <span className="font-mono text-xs text-muted">—</span>;
+  return <span className="shrink-0 font-mono text-xs text-muted">—</span>;
 }
 
 export default function PowerRankingsPage() {
@@ -51,9 +51,9 @@ export default function PowerRankingsPage() {
           return (
             <div
               key={entry.teamId}
-              className="flex items-center gap-4 rounded-lg border border-border bg-surface px-4 py-3"
+              className="flex items-center gap-3 rounded-lg border border-border bg-surface px-3 py-3 sm:gap-4 sm:px-4"
             >
-              <span className="w-6 font-mono text-lg font-bold text-accent">
+              <span className="w-5 shrink-0 font-mono text-lg font-bold text-accent sm:w-6">
                 {entry.rank}
               </span>
               <Image
@@ -61,10 +61,12 @@ export default function PowerRankingsPage() {
                 alt={`${team.teamName} logo`}
                 width={44}
                 height={44}
-                className="size-11 shrink-0 rounded-md border border-border bg-surface-raised object-cover"
+                className="size-9 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:size-11"
               />
-              <div className="flex-1">
-                <p className="font-medium text-foreground">{team.teamName}</p>
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-medium text-foreground">
+                  {team.teamName}
+                </p>
                 <p className="text-xs text-muted">{team.owner}</p>
               </div>
               <MovementIndicator

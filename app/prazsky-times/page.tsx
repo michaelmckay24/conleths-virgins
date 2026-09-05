@@ -18,7 +18,7 @@ export default function PrazskyTimesPage() {
   return (
     <div>
       <h1 className="mb-6 text-2xl font-bold tracking-tight text-foreground">
-        Prazsky Times
+        The Prazsky Times
       </h1>
       <div className="flex flex-col gap-6">
         {sortedArticles.map((article) => (
@@ -36,7 +36,7 @@ export default function PrazskyTimesPage() {
               />
             </div>
             <div className="p-4">
-              <div className="mb-2 flex items-baseline justify-between gap-4">
+              <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                 <h2 className="text-lg font-semibold text-foreground">
                   {article.title}
                 </h2>

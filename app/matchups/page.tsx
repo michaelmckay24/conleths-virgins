@@ -12,37 +12,41 @@ function MatchupCard({ matchup }: { matchup: Matchup }) {
 
   return (
     <div className="rounded-lg border border-border bg-surface p-4">
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+      <div className="flex flex-col gap-4 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center">
         <div className="flex items-center gap-3">
           <Image
             src={home.icon}
             alt={`${home.teamName} logo`}
             width={44}
             height={44}
-            className="size-11 shrink-0 rounded-md border border-border bg-surface-raised object-cover"
+            className="size-9 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:size-11"
           />
           <div>
-            <p className="font-medium text-foreground">{home.teamName}</p>
+            <p className="text-sm font-medium text-foreground sm:text-base">
+              {home.teamName}
+            </p>
             <p className="text-xs text-muted">{home.owner}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 font-mono text-2xl font-bold">
+        <div className="flex items-center justify-center gap-2 font-mono text-xl font-bold sm:text-2xl">
           <span className="text-foreground">{matchup.homeScore.toFixed(1)}</span>
           <span className="text-xs font-normal text-muted">–</span>
           <span className="text-foreground">{matchup.awayScore.toFixed(1)}</span>
         </div>
-        <div className="flex items-center justify-end gap-3">
-          <div className="text-right">
-            <p className="font-medium text-foreground">{away.teamName}</p>
-            <p className="text-xs text-muted">{away.owner}</p>
-          </div>
+        <div className="flex items-center justify-start gap-3 sm:justify-end">
           <Image
             src={away.icon}
             alt={`${away.teamName} logo`}
             width={44}
             height={44}
-            className="size-11 shrink-0 rounded-md border border-border bg-surface-raised object-cover"
+            className="order-1 size-9 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:order-2 sm:size-11"
           />
+          <div className="order-2 text-left sm:order-1 sm:text-right">
+            <p className="text-sm font-medium text-foreground sm:text-base">
+              {away.teamName}
+            </p>
+            <p className="text-xs text-muted">{away.owner}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -63,7 +67,7 @@ function WeekSelector({
   onNext: () => void;
 }) {
   return (
-    <div className="mb-6 flex items-center justify-center gap-6">
+    <div className="mb-6 flex items-center justify-center gap-4 sm:gap-6">
       <button
         type="button"
         onClick={onPrev}
