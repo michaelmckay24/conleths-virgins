@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { powerRankings } from "@/data/powerRankings";
 import { getTeamById } from "@/data/teams";
 
@@ -55,6 +56,13 @@ export default function PowerRankingsPage() {
               <span className="w-6 font-mono text-lg font-bold text-accent">
                 {entry.rank}
               </span>
+              <Image
+                src={team.icon}
+                alt={`${team.teamName} logo`}
+                width={44}
+                height={44}
+                className="size-11 shrink-0 rounded-md border border-border bg-surface-raised object-cover"
+              />
               <div className="flex-1">
                 <p className="font-medium text-foreground">{team.teamName}</p>
                 <p className="text-xs text-muted">{team.owner}</p>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { teams } from "@/data/teams";
 
 export default function StandingsPage() {
@@ -20,6 +21,7 @@ export default function StandingsPage() {
               <th className="px-4 py-3 text-right font-semibold">W-L</th>
               <th className="px-4 py-3 text-right font-semibold">PF</th>
               <th className="px-4 py-3 text-right font-semibold">PA</th>
+              <th className="px-4 py-3 text-right font-semibold">Playoff %</th>
             </tr>
           </thead>
           <tbody>
@@ -32,7 +34,16 @@ export default function StandingsPage() {
                   {index + 1}
                 </td>
                 <td className="px-4 py-3 font-medium text-foreground">
-                  {team.teamName}
+                  <div className="flex items-center gap-3">
+                    <Image
+                      src={team.icon}
+                      alt={`${team.teamName} logo`}
+                      width={44}
+                      height={44}
+                      className="size-11 rounded-md border border-border bg-surface-raised object-cover"
+                    />
+                    {team.teamName}
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-muted">{team.owner}</td>
                 <td className="px-4 py-3 text-right font-mono">
@@ -43,6 +54,9 @@ export default function StandingsPage() {
                 </td>
                 <td className="px-4 py-3 text-right font-mono text-muted">
                   {team.pointsAgainst.toFixed(1)}
+                </td>
+                <td className="px-4 py-3 text-right font-mono text-muted">
+                  {team.playoffOdds}%
                 </td>
               </tr>
             ))}
