@@ -36,6 +36,12 @@ export default function NavBar() {
     };
   }, []);
 
+  function scrollByDirection(direction: -1 | 1) {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: "smooth" });
+  }
+
   return (
     <header className="sticky top-0 z-10 border-b border-border bg-surface/95 backdrop-blur">
       <div className="mx-auto flex max-w-4xl flex-col px-4 sm:flex-row sm:items-center sm:gap-8 sm:px-6">
@@ -43,12 +49,16 @@ export default function NavBar() {
           Conleth&apos;s Virgins
         </span>
         <div className="relative min-w-0">
-          <div
-            aria-hidden="true"
-            className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-surface to-transparent transition-opacity duration-200 ${
-              canScrollLeft ? "opacity-100" : "opacity-0"
-            }`}
-          />
+          {canScrollLeft && (
+            <button
+              type="button"
+              onClick={() => scrollByDirection(-1)}
+              aria-label="Scroll tabs left"
+              className="absolute inset-y-0 left-0 z-10 flex items-center bg-gradient-to-r from-surface via-surface to-transparent py-2 pr-3 pl-1 text-muted transition-colors hover:text-foreground"
+            >
+              ‹
+            </button>
+          )}
           <nav
             ref={scrollRef}
             className="flex min-w-0 gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -70,12 +80,16 @@ export default function NavBar() {
               );
             })}
           </nav>
-          <div
-            aria-hidden="true"
-            className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-surface to-transparent transition-opacity duration-200 ${
-              canScrollRight ? "opacity-100" : "opacity-0"
-            }`}
-          />
+          {canScrollRight && (
+            <button
+              type="button"
+              onClick={() => scrollByDirection(1)}
+              aria-label="Scroll tabs right"
+              className="absolute inset-y-0 right-0 z-10 flex items-center bg-gradient-to-l from-surface via-surface to-transparent py-2 pr-1 pl-3 text-muted transition-colors hover:text-foreground"
+            >
+              ›
+            </button>
+          )}
         </div>
       </div>
     </header>
