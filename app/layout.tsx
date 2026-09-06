@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import NavBar from "./_components/NavBar";
 import "./globals.css";
@@ -16,6 +16,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Conleth's Virgins",
   description: "Fantasy football league standings, matchups, and power rankings.",
+  appleWebApp: {
+    capable: true,
+    title: "Conleth's Virgins",
+    statusBarStyle: "black",
+  },
+  other: {
+    // Next's built-in appleWebApp resolver only emits the unprefixed
+    // "mobile-web-app-capable" tag — add the Apple-specific one explicitly.
+    "apple-mobile-web-app-capable": "yes",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "black",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
