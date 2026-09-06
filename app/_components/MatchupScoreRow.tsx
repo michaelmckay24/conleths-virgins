@@ -14,13 +14,13 @@ export function MatchupScoreRow({ matchup }: { matchup: Matchup }) {
           alt={`${home.teamName} logo`}
           width={44}
           height={44}
-          className="size-9 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:size-11"
+          className="size-8 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:size-11"
         />
         <div>
-          <p className="text-sm font-medium text-foreground sm:text-base">
+          <p className="text-xs font-medium text-foreground sm:text-base">
             {home.teamName}
           </p>
-          <p className="text-xs text-muted">{home.owner}</p>
+          <p className="text-[11px] text-muted sm:text-xs">{home.owner}</p>
         </div>
       </div>
       <div className="flex items-center justify-center gap-2 font-mono text-xl font-bold sm:text-2xl">
@@ -34,13 +34,13 @@ export function MatchupScoreRow({ matchup }: { matchup: Matchup }) {
           alt={`${away.teamName} logo`}
           width={44}
           height={44}
-          className="order-1 size-9 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:order-2 sm:size-11"
+          className="order-1 size-8 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:order-2 sm:size-11"
         />
         <div className="order-2 text-left sm:order-1 sm:text-right">
-          <p className="text-sm font-medium text-foreground sm:text-base">
+          <p className="text-xs font-medium text-foreground sm:text-base">
             {away.teamName}
           </p>
-          <p className="text-xs text-muted">{away.owner}</p>
+          <p className="text-[11px] text-muted sm:text-xs">{away.owner}</p>
         </div>
       </div>
     </div>
