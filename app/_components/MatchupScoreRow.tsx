@@ -14,13 +14,13 @@ export function MatchupScoreRow({ matchup }: { matchup: Matchup }) {
           alt={`${home.teamName} logo`}
           width={44}
           height={44}
-          className="size-11 shrink-0 rounded-md border border-border bg-surface-raised object-cover"
+          className="size-6 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:size-11"
         />
         <div className="min-w-0">
-          <p className="truncate text-base font-medium text-foreground">
+          <p className="truncate text-xs font-medium text-foreground sm:text-base">
             {home.teamName}
           </p>
-          <p className="truncate text-xs text-muted">{home.owner}</p>
+          <p className="truncate text-[11px] text-muted sm:text-xs">{home.owner}</p>
         </div>
       </div>
       <div className="order-3 col-span-2 flex items-center justify-center gap-2 font-mono text-xl font-bold sm:order-none sm:col-span-1 sm:text-2xl">
@@ -30,17 +30,17 @@ export function MatchupScoreRow({ matchup }: { matchup: Matchup }) {
       </div>
       <div className="order-2 flex min-w-0 items-center justify-end gap-1.5 sm:order-none sm:gap-3">
         <div className="min-w-0 text-right">
-          <p className="truncate text-base font-medium text-foreground">
+          <p className="truncate text-xs font-medium text-foreground sm:text-base">
             {away.teamName}
           </p>
-          <p className="truncate text-xs text-muted">{away.owner}</p>
+          <p className="truncate text-[11px] text-muted sm:text-xs">{away.owner}</p>
         </div>
         <Image
           src={away.icon}
           alt={`${away.teamName} logo`}
           width={44}
           height={44}
-          className="size-11 shrink-0 rounded-md border border-border bg-surface-raised object-cover"
+          className="size-6 shrink-0 rounded-md border border-border bg-surface-raised object-cover sm:size-11"
         />
       </div>
     </div>
