@@ -79,8 +79,7 @@ export function PressConferenceDropdown({
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const label =
-    type === "pre" ? "Pre Match Press Conference" : "Post Match Press Conference";
+  const label = type === "pre" ? "Pre Match" : "Post Match";
 
   useEffect(() => {
     let cancelled = false;

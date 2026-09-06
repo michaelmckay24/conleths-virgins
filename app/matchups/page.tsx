@@ -14,13 +14,22 @@ function MatchupCard({ matchup }: { matchup: Matchup }) {
   return (
     <div className="rounded-lg border border-border bg-surface p-4">
       <MatchupScoreRow matchup={matchup} />
-      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
+      <div className="mt-4">
+        <h3 className="mb-2 text-xs font-semibold tracking-widest text-muted uppercase">
+          Press Conferences
+        </h3>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <PressConferenceDropdown
             week={matchup.week}
             teamId={home.id}
             type="pre"
             coachName={home.coachName}
+          />
+          <PressConferenceDropdown
+            week={matchup.week}
+            teamId={away.id}
+            type="pre"
+            coachName={away.coachName}
           />
           <PressConferenceDropdown
             week={matchup.week}
@@ -28,14 +37,6 @@ function MatchupCard({ matchup }: { matchup: Matchup }) {
             type="post"
             coachName={home.coachName}
             locked={!matchup.completed}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <PressConferenceDropdown
-            week={matchup.week}
-            teamId={away.id}
-            type="pre"
-            coachName={away.coachName}
           />
           <PressConferenceDropdown
             week={matchup.week}
