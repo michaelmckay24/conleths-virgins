@@ -15,7 +15,7 @@ export const teams: Team[] = [
     { id: 5, owner: "Pogie", coachName: "HC Pogie", teamName: "Pogo's Lads", icon: "/team-icons/pogie.png", playoffOdds: 47 },
     { id: 6, owner: "Dan", coachName: "HC Kenny", teamName: "7hrs of Redzone", icon: "/team-icons/dan.png", playoffOdds: 47 },
     { id: 7, owner: "Kev", coachName: "HC Dolan", teamName: "Hot Night Slugz", icon: "/team-icons/kev.png", playoffOdds: 44 },
-    { id: 8, owner: "Stu", coachName: "HC Fitzpatrick", teamName: "Fitzmagic", icon: "/team-icons/stu.png", playoffOdds: 52 }
+    { id: 8, owner: "Stu", coachName: "HC Fitzpatrick", teamName: "FitzMagic", icon: "/team-icons/stu.png", playoffOdds: 52 }
 ]
 
 export function getTeamById(id: number): Team {
