@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { articles } from "@/data/articles";
+import { ArticleComments } from "./ArticleComments";
 
 function formatDate(dateString: string) {
   const [year, month, day] = dateString.split("-").map(Number);
@@ -54,6 +55,7 @@ export default function PrazskyTimesPage() {
                   </p>
                 ))}
               </div>
+              <ArticleComments articleId={article.id} />
             </div>
           </article>
         ))}
