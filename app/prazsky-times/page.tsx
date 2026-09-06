@@ -80,7 +80,7 @@ export default function PrazskyTimesPage() {
               {item.kind === "article" ? (
                 <div className="flex flex-col gap-3">
                   {item.body.split("\n\n").map((paragraph, index) => (
-                    <p key={index} className="text-sm text-muted">
+                    <p key={index} className="whitespace-pre-line text-sm text-muted">
                       {paragraph}
                     </p>
                   ))}

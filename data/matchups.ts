@@ -79,3 +79,39 @@ export const matchups: Matchup[] = [
     { week: 14, homeTeamId: 4, awayTeamId: 6, homeScore: 0, awayScore: 0, completed: false, recapFile: "week14/matchup3.txt" },
     { week: 14, homeTeamId: 5, awayTeamId: 2, homeScore: 0, awayScore: 0, completed: false, recapFile: "week14/matchup4.txt" },
 ]
+
+export type TeamRecord = {
+    wins: number
+    losses: number
+    pointsFor: number
+    pointsAgainst: number
+}
+
+/**
+ * A team's win/loss record and points for/against, built from completed
+ * matchups. Pass `beforeWeek` to get the record entering that week (i.e.
+ * only matchups from earlier weeks count) instead of the full season.
+ */
+export function getTeamRecord(teamId: number, beforeWeek?: number): TeamRecord {
+    const record: TeamRecord = { wins: 0, losses: 0, pointsFor: 0, pointsAgainst: 0 }
+
+    for (const matchup of matchups) {
+        if (!matchup.completed) continue
+        if (beforeWeek !== undefined && matchup.week >= beforeWeek) continue
+
+        const isHome = matchup.homeTeamId === teamId
+        const isAway = matchup.awayTeamId === teamId
+        if (!isHome && !isAway) continue
+
+        const teamScore = isHome ? matchup.homeScore : matchup.awayScore
+        const opponentScore = isHome ? matchup.awayScore : matchup.homeScore
+
+        record.pointsFor += teamScore
+        record.pointsAgainst += opponentScore
+
+        if (teamScore > opponentScore) record.wins += 1
+        else if (opponentScore > teamScore) record.losses += 1
+    }
+
+    return record
+}

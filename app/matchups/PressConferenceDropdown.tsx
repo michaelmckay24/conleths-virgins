@@ -14,18 +14,47 @@ type PressConferenceEntry = {
   content: string;
 };
 
-function StatusDot({ hasEntry }: { hasEntry: boolean | null }) {
+function StatusIcon({ hasEntry }: { hasEntry: boolean | null }) {
+  if (hasEntry === null) {
+    return (
+      <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-muted" />
+    );
+  }
+
+  if (hasEntry) {
+    return (
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 20 20"
+        fill="none"
+        className="size-4 shrink-0 text-win"
+      >
+        <path
+          d="M5 10.5l3 3 7-7"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
   return (
-    <span
+    <svg
       aria-hidden="true"
-      className={`size-2 shrink-0 rounded-full ${
-        hasEntry === null
-          ? "bg-muted"
-          : hasEntry
-            ? "bg-accent"
-            : "bg-loss"
-      }`}
-    />
+      viewBox="0 0 20 20"
+      fill="none"
+      className="size-4 shrink-0 text-loss"
+    >
+      <path
+        d="M6 6l8 8M14 6l-8 8"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -158,7 +187,7 @@ export function PressConferenceDropdown({
           {label} <span className="text-muted">— {coachName}</span>
         </span>
         <span className="flex items-center gap-2">
-          <StatusDot hasEntry={loading ? null : Boolean(entry)} />
+          <StatusIcon hasEntry={loading ? null : Boolean(entry)} />
           {!locked && (
             <span
               className={`text-xs text-muted transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -174,9 +203,13 @@ export function PressConferenceDropdown({
           {error && <p className="text-xs text-loss">{error}</p>}
           {!loading && !error && entry && !isEditing && (
             <div className="flex flex-col gap-2">
-              <p className="rounded-md bg-surface-raised px-3 py-2 text-sm text-foreground">
-                {entry.content}
-              </p>
+              <div className="flex flex-col gap-3 rounded-md bg-surface-raised px-3 py-2">
+                {entry.content.split("\n\n").map((paragraph, index) => (
+                  <p key={index} className="whitespace-pre-line text-sm text-foreground">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
               <button
                 type="button"
                 onClick={handleStartEdit}
@@ -195,7 +228,7 @@ export function PressConferenceDropdown({
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Say something…"
-                rows={2}
+                rows={5}
                 className="resize-none rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent"
               />
               <button

@@ -1,6 +1,14 @@
 import Image from "next/image";
-import type { Matchup } from "@/data/matchups";
+import { getTeamRecord, type Matchup } from "@/data/matchups";
 import { getTeamById } from "@/data/teams";
+
+function formatRecord(teamId: number, matchup: Matchup) {
+  // A completed matchup should show each team's record including that
+  // game's own result; an upcoming one shows the record entering the week.
+  const cutoffWeek = matchup.completed ? matchup.week + 1 : matchup.week;
+  const { wins, losses } = getTeamRecord(teamId, cutoffWeek);
+  return `${wins}-${losses}`;
+}
 
 export function MatchupScoreRow({ matchup }: { matchup: Matchup }) {
   const home = getTeamById(matchup.homeTeamId);
@@ -20,7 +28,9 @@ export function MatchupScoreRow({ matchup }: { matchup: Matchup }) {
           <p className="truncate text-xs font-medium text-foreground sm:text-base">
             {home.teamName}
           </p>
-          <p className="truncate text-[11px] text-muted sm:text-xs">{home.owner}</p>
+          <p className="truncate text-[11px] text-muted sm:text-xs">
+            {formatRecord(home.id, matchup)}
+          </p>
         </div>
       </div>
       <div className="order-3 col-span-2 flex items-center justify-center gap-2 font-mono text-xl font-bold sm:order-none sm:col-span-1 sm:text-2xl">
@@ -33,7 +43,9 @@ export function MatchupScoreRow({ matchup }: { matchup: Matchup }) {
           <p className="truncate text-xs font-medium text-foreground sm:text-base">
             {away.teamName}
           </p>
-          <p className="truncate text-[11px] text-muted sm:text-xs">{away.owner}</p>
+          <p className="truncate text-[11px] text-muted sm:text-xs">
+            {formatRecord(away.id, matchup)}
+          </p>
         </div>
         <Image
           src={away.icon}

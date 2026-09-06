@@ -1,40 +1,12 @@
 import Image from "next/image";
 import { teams } from "@/data/teams";
-import { matchups } from "@/data/matchups";
-
-type TeamRecord = {
-  wins: number;
-  losses: number;
-  pointsFor: number;
-  pointsAgainst: number;
-};
+import { getTeamRecord, type TeamRecord } from "@/data/matchups";
 
 function computeRecords(): Record<number, TeamRecord> {
   const records: Record<number, TeamRecord> = {};
   for (const team of teams) {
-    records[team.id] = { wins: 0, losses: 0, pointsFor: 0, pointsAgainst: 0 };
+    records[team.id] = getTeamRecord(team.id);
   }
-
-  for (const matchup of matchups) {
-    if (!matchup.completed) continue;
-
-    const home = records[matchup.homeTeamId];
-    const away = records[matchup.awayTeamId];
-
-    home.pointsFor += matchup.homeScore;
-    home.pointsAgainst += matchup.awayScore;
-    away.pointsFor += matchup.awayScore;
-    away.pointsAgainst += matchup.homeScore;
-
-    if (matchup.homeScore > matchup.awayScore) {
-      home.wins += 1;
-      away.losses += 1;
-    } else if (matchup.awayScore > matchup.homeScore) {
-      away.wins += 1;
-      home.losses += 1;
-    }
-  }
-
   return records;
 }
 

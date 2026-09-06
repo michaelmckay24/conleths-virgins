@@ -33,7 +33,10 @@ export function WeekRecapContent({ week }: { week: number }) {
             <div className="flex flex-col gap-3">
               {paragraphs ? (
                 paragraphs.map((paragraph, paragraphIndex) => (
-                  <p key={paragraphIndex} className="text-sm text-muted">
+                  <p
+                    key={paragraphIndex}
+                    className="whitespace-pre-line text-sm text-muted"
+                  >
                     {paragraph}
                   </p>
                 ))
