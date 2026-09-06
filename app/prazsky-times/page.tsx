@@ -1,8 +1,22 @@
+import fs from "node:fs";
+import path from "node:path";
 import Image from "next/image";
 import { articles } from "@/data/articles";
 import { weekRecaps } from "@/data/weekRecaps";
 import { ArticleComments } from "./ArticleComments";
 import { WeekRecapContent } from "./WeekRecapContent";
+
+const ARTICLES_DIR = path.join(process.cwd(), "content", "articles");
+
+function readArticleParagraphs(bodyFile: string): string[] | null {
+  try {
+    const contents = fs.readFileSync(path.join(ARTICLES_DIR, bodyFile), "utf-8");
+    const trimmed = contents.trim();
+    return trimmed ? trimmed.split("\n\n") : null;
+  } catch {
+    return null;
+  }
+}
 
 function parseDate(dateString: string) {
   const [year, month, day] = dateString.split("-").map(Number);
@@ -24,7 +38,7 @@ type FeedItem =
       title: string;
       image: string;
       publishedAt: string;
-      body: string;
+      bodyFile: string;
     }
   | {
       kind: "weekRecap";
@@ -79,11 +93,16 @@ export default function PrazskyTimesPage() {
               </div>
               {item.kind === "article" ? (
                 <div className="flex flex-col gap-3">
-                  {item.body.split("\n\n").map((paragraph, index) => (
-                    <p key={index} className="whitespace-pre-line text-sm text-muted">
-                      {paragraph}
-                    </p>
-                  ))}
+                  {(readArticleParagraphs(item.bodyFile) ?? []).map(
+                    (paragraph, index) => (
+                      <p
+                        key={index}
+                        className="whitespace-pre-line text-sm text-muted"
+                      >
+                        {paragraph}
+                      </p>
+                    )
+                  )}
                 </div>
               ) : (
                 <WeekRecapContent week={item.week} />
