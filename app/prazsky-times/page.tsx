@@ -1,19 +1,48 @@
 import Image from "next/image";
 import { articles } from "@/data/articles";
+import { weekRecaps } from "@/data/weekRecaps";
 import { ArticleComments } from "./ArticleComments";
+import { WeekRecapContent } from "./WeekRecapContent";
+
+function parseDate(dateString: string) {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
 
 function formatDate(dateString: string) {
-  const [year, month, day] = dateString.split("-").map(Number);
-  return new Date(year, month - 1, day).toLocaleDateString(undefined, {
+  return parseDate(dateString).toLocaleDateString(undefined, {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
 }
 
+type FeedItem =
+  | {
+      kind: "article";
+      id: number;
+      title: string;
+      image: string;
+      publishedAt: string;
+      body: string;
+    }
+  | {
+      kind: "weekRecap";
+      id: number;
+      title: string;
+      image: string;
+      publishedAt: string;
+      week: number;
+    };
+
 export default function PrazskyTimesPage() {
-  const sortedArticles = [...articles].sort(
-    (a, b) => b.publishedAt.localeCompare(a.publishedAt)
+  const feedItems: FeedItem[] = [
+    ...articles.map((article) => ({ kind: "article" as const, ...article })),
+    ...weekRecaps
+      .filter((recap) => recap.published)
+      .map((recap) => ({ kind: "weekRecap" as const, ...recap })),
+  ].sort(
+    (a, b) => parseDate(b.publishedAt).getTime() - parseDate(a.publishedAt).getTime()
   );
 
   return (
@@ -22,15 +51,15 @@ export default function PrazskyTimesPage() {
         The Prazsky Times
       </h1>
       <div className="flex flex-col gap-6">
-        {sortedArticles.map((article) => (
+        {feedItems.map((item) => (
           <article
-            key={article.id}
+            key={`${item.kind}-${item.id}`}
             className="overflow-hidden rounded-lg border border-border bg-surface"
           >
             <div className="relative aspect-video w-full">
               <Image
-                src={article.image}
-                alt={article.title}
+                src={item.image}
+                alt={item.title}
                 fill
                 sizes="(min-width: 896px) 896px, 100vw"
                 className="object-cover"
@@ -39,23 +68,32 @@ export default function PrazskyTimesPage() {
             <div className="p-4">
               <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                 <h2 className="text-lg font-semibold text-foreground">
-                  {article.title}
+                  {item.title}
                 </h2>
                 <time
-                  dateTime={article.publishedAt}
+                  dateTime={item.publishedAt}
                   className="shrink-0 font-mono text-xs tracking-wide text-muted uppercase"
                 >
-                  {formatDate(article.publishedAt)}
+                  {formatDate(item.publishedAt)}
                 </time>
               </div>
-              <div className="flex flex-col gap-3">
-                {article.body.split("\n\n").map((paragraph, index) => (
-                  <p key={index} className="text-sm text-muted">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-              <ArticleComments articleId={article.id} />
+              {item.kind === "article" ? (
+                <div className="flex flex-col gap-3">
+                  {item.body.split("\n\n").map((paragraph, index) => (
+                    <p key={index} className="text-sm text-muted">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <WeekRecapContent week={item.week} />
+              )}
+              <ArticleComments
+                // Week recaps and articles share one `comments` table keyed only
+                // by article_id, and both id sequences start at 1 — negate week
+                // recap ids so they can't collide with a real article's id.
+                articleId={item.kind === "article" ? item.id : -item.id}
+              />
             </div>
           </article>
         ))}

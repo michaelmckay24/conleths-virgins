@@ -93,10 +93,10 @@ export default function StandingsPage() {
                     {record.wins}-{record.losses}
                   </td>
                   <td className="px-3 py-3 text-right font-mono whitespace-nowrap text-muted sm:px-4">
-                    {record.pointsFor.toFixed(1)}
+                    {record.pointsFor.toFixed(2)}
                   </td>
                   <td className="px-3 py-3 text-right font-mono whitespace-nowrap text-muted sm:px-4">
-                    {record.pointsAgainst.toFixed(1)}
+                    {record.pointsAgainst.toFixed(2)}
                   </td>
                   <td className="px-3 py-3 text-right font-mono whitespace-nowrap text-muted sm:px-4">
                     {team.playoffOdds}%

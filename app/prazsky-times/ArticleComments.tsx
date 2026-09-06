@@ -41,6 +41,7 @@ export function ArticleComments({ articleId }: { articleId: number }) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   async function fetchComments() {
     setLoading(true);
@@ -103,9 +104,16 @@ export function ArticleComments({ articleId }: { articleId: number }) {
     } else {
       setName("");
       setMessage("");
+      setIsFormOpen(false);
       await fetchComments();
     }
     setSubmitting(false);
+  }
+
+  function handleCancel() {
+    setName("");
+    setMessage("");
+    setIsFormOpen(false);
   }
 
   return (
@@ -138,29 +146,48 @@ export function ArticleComments({ articleId }: { articleId: number }) {
           ))}
         </ul>
       )}
-      <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2">
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
-          className="rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent"
-        />
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Message"
-          rows={2}
-          className="resize-none rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent"
-        />
+      {isFormOpen ? (
+        <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+            className="rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent"
+          />
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Comment"
+            rows={2}
+            className="resize-none rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent"
+          />
+          <div className="flex items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="text-sm text-muted transition-colors hover:text-foreground"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={submitting || !name.trim() || !message.trim()}
+              className="rounded-md bg-accent px-3 py-1 text-sm font-semibold text-background transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {submitting ? "Posting…" : "Post"}
+            </button>
+          </div>
+        </form>
+      ) : (
         <button
-          type="submit"
-          disabled={submitting || !name.trim() || !message.trim()}
-          className="self-end rounded-md bg-accent px-3 py-1 text-sm font-semibold text-background transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
+          type="button"
+          onClick={() => setIsFormOpen(true)}
+          className="mt-4 rounded-md border border-border px-3 py-1 text-sm font-semibold text-foreground transition-colors hover:bg-surface-raised"
         >
-          {submitting ? "Posting…" : "Post"}
+          Comment
         </button>
-      </form>
+      )}
     </div>
   );
 }
