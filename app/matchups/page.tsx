@@ -5,6 +5,7 @@ import { useState } from "react";
 import { matchups, type Matchup } from "@/data/matchups";
 import { getTeamById } from "@/data/teams";
 import { currentWeek } from "@/data/config";
+import { PressConferenceDropdown } from "./PressConferenceDropdown";
 
 function MatchupCard({ matchup }: { matchup: Matchup }) {
   const home = getTeamById(matchup.homeTeamId);
@@ -47,6 +48,38 @@ function MatchupCard({ matchup }: { matchup: Matchup }) {
             </p>
             <p className="text-xs text-muted">{away.owner}</p>
           </div>
+        </div>
+      </div>
+      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <PressConferenceDropdown
+            week={matchup.week}
+            teamId={home.id}
+            type="pre"
+            coachName={home.coachName}
+          />
+          <PressConferenceDropdown
+            week={matchup.week}
+            teamId={home.id}
+            type="post"
+            coachName={home.coachName}
+            locked={!matchup.completed}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <PressConferenceDropdown
+            week={matchup.week}
+            teamId={away.id}
+            type="pre"
+            coachName={away.coachName}
+          />
+          <PressConferenceDropdown
+            week={matchup.week}
+            teamId={away.id}
+            type="post"
+            coachName={away.coachName}
+            locked={!matchup.completed}
+          />
         </div>
       </div>
     </div>

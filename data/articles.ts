@@ -16,7 +16,7 @@ export const articles: Article[] = [
             "As always, finding a draft time that worked for everyone was a challenge. One manager was five hours behind the rest of the league in the land of the free. Another was multitasking dinner and drinks prep near The Emirates. Two were fighting through airport queues praying for flight delays, and three sat upstairs in The 51, hoping to take some inspiration from the Bruno Fernandes masterclass playing on the TV. And one manager drafted from wherever Stu was.\n" +
             "\n" +
             "Challenges aside, everyone was present from round 1 to round 16, and the teams around the league are set for kickoff next week!",
-        publishedAt: "2026-09-05",
+        publishedAt: "2026-09-04",
     },
     {
         id: 2,
@@ -31,6 +31,6 @@ export const articles: Article[] = [
             "He often spends his free time volunteering at animal shelters and recently picked up a medal of honour from Leo Cullen after saving a bus filled with the entire Leinster rugby team from falling into the Dodder.\n" +
             "\n" +
             "There are talks around of a three part movie franchise of his life coming out soon. Stay tuned.",
-        publishedAt: "2026-09-06",
+        publishedAt: "2026-09-05",
     },
 ]
